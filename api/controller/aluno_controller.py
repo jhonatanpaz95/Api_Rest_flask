@@ -19,38 +19,46 @@ class AlunoController(Resource):
     def post(self):
         alunoSchema = aluno_schema.AlunoSchema()
         validate = alunoSchema.validate(request.json)
+
         if validate:
             return make_response(jsonify(validate),400)
-        else:
-            nome = request.json['nome']
-            data_nascimento = request.json['data_nascimento']
-            novoAluno = aluno_dto.AlunoDTO(nome=nome, data_nascimento=data_nascimento)
-            retorno = aluno_service.cadastrar_aluno(novoAluno)
-            alunoJson = alunoSchema.jsonify(retorno)
-            return make_response(alunoJson, 201)
+
+        nome = request.json['nome']
+        data_nascimento = request.json['data_nascimento']
+        novoAluno = aluno_dto.AlunoDTO(nome=nome, data_nascimento=data_nascimento)
+        retorno = aluno_service.cadastrar_aluno(novoAluno)
+        alunoJson = alunoSchema.jsonify(retorno)
+
+        return make_response(alunoJson, 201)
 
     def put(self,id):
         aluno = aluno_service.listar_alunos_by_id(id)
+
         if aluno is None:
             return make_response(jsonify("Aluno não encontrado!"), 404)
-        else:
-            alunoSchema = aluno_schema.AlunoSchema()
-            validate = alunoSchema.validate(request.json)
+
+        alunoSchema = aluno_schema.AlunoSchema()
+        validate = alunoSchema.validate(request.json)
+
         if validate:
             make_response(jsonify(validate),400)
-        else:
-            nome = request.json["nome"]
-            data_nascimento = request.json["data_nascimento"]
-            novoAlunoAlterado = aluno_dto.AlunoDTO(nome, data_nascimento)
-            aluno_service.atualizar_aluno(aluno, novoAlunoAlterado)
-            alunoAtualizado = aluno_service.listar_alunos_by_id(id)
-            return make_response(alunoSchema.jsonify(alunoAtualizado),200)
+
+        nome = request.json["nome"]
+        data_nascimento = request.json["data_nascimento"]
+        novoAlunoAlterado = aluno_dto.AlunoDTO(nome, data_nascimento)
+        aluno_service.atualizar_aluno(aluno, novoAlunoAlterado)
+        alunoAtualizado = aluno_service.listar_alunos_by_id(id)
+
+        return make_response(alunoSchema.jsonify(alunoAtualizado),200)
 
     def delete(self,id):
         alunoBD = aluno_service.listar_alunos_by_id(id)
+
         if alunoBD is None:
             return make_response(jsonify("Aluno não Encontrado!"),400)
+
         aluno_service.excluir_aluno(alunoBD)
+
         return make_response("Aluno excluído com sucesso", 204)
 
 

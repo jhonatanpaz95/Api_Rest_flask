@@ -9,7 +9,7 @@ from ..service import turma_service
 
 
 class TurmaController(Resource):
-    def get(selfs):
+    def get(self):
         turmas = turma_service.listar_turmas()
         validate = turma_schema.TurmaSchema(many=True)
         return make_response(validate.jsonify(turmas),200)
