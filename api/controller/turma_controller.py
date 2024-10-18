@@ -10,64 +10,75 @@ from ..service import turma_service
 
 class TurmaController(Resource):
     def get(self):
-        turmas = turma_service.listar_turmas()
+        turma_response_bd = turma_service.listar_turmas()
         validate = turma_schema.TurmaSchema(many=True)
-        return make_response(validate.jsonify(turmas),200)
+
+        return make_response(validate.jsonify(turma_response_bd),200)
 
     def post(self):
-        turmaSchema = turma_schema.TurmaSchema()
-        validate = turmaSchema.validate(request.json)
+        turma_response_schema = turma_schema.TurmaSchema()
+        validate = turma_response_schema.validate(request.json)
+
         if validate:
             return make_response(jsonify(validate),400)
-        else:
-            nome = request.json["nome"]
-            data_inicio = request.json["data_inicio"]
-            data_fim = request.json["data_fim"]
-            descricao = request.json["descricao"]
 
+        nome = request.json['nome']
+        data_inicio = request.json['data_inicio']
+        data_fim = request.json['data_fim']
+        descricao = request.json['descricao']
+        curso_id = request.json['curso_id']
+        nova_turma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim, curso_id=curso_id)
+        retorno = turma_service.cadastrar_turma(nova_turma)
+        turma_json = turma_response_schema.jsonify(retorno)
 
-            novaturma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim)
-            retorno = turma_service.cadastrar_turma(novaturma)
-            turmaJson = turmaSchema.jsonify(retorno)
-            return make_response(turmaJson,201)
+        return make_response(turma_json,201)
 
     def put(self, id):
-        turma = turma_service.listar_turmas_by_id(id)
-        if turma is None:
-            return make_response(jsonify("Turma não encontrada"),404)
-        turmaSchema = turma_schema.TurmaSchema()
-        validate = turmaSchema.validate(request.json)
+        turma_response_bd = turma_service.listar_turmas_by_id(id)
+
+        if turma_response_bd is None:
+            return make_response(jsonify('Turma não encontrada'),404)
+
+        turma_response_schema = turma_schema.TurmaSchema()
+        validate = turma_response_schema.validate(request.json)
+
         if validate:
             return make_response(jsonify(validate),400)
-        else:
-            nome = request.json["nome"]
-            descricao = request.json["descricao"]
-            data_inicio = request.json["data_inicio"]
-            data_fim = request.json["data_fim"]
-            novaturma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim)
-            turma_service.atualizar_turma(turma, novaturma)
-            turma_atalizada = turma_service.listar_turmas_by_id(id)
-            return make_response(turmaSchema.jsonify(turma_atalizada),200)
+
+        nome = request.json['nome']
+        data_inicio = request.json['data_inicio']
+        data_fim = request.json['data_fim']
+        descricao = request.json['descricao']
+        curso_id = request.json['curso_id']
+        nova_turma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim, curso_id=curso_id)
+        turma_service.atualizar_turma(turma_response_bd, nova_turma)
+        turma_atalizada = turma_service.listar_turmas_by_id(id)
+
+        return make_response(turma_response_schema.jsonify(turma_atalizada),200)
 
 
     def delete(self, id):
+        turma_response_bd = turma_service.listar_turmas_by_id(id)
 
-        turmaDB = turma_service.listar_turmas_by_id(id)
-        if turmaDB is None:
-            return make_response(jsonify("Turma não encontrada"), 404)
-        turma_service.excluir_turma(turmaDB)
-        return make_response("Turma excluída com sucesso!", 204)
+        if turma_response_bd is None:
+            return make_response(jsonify('Turma não encontrada'), 404)
+
+        turma_service.excluir_turma(turma_response_bd)
+
+        return make_response('Turma excluída com sucesso!', 204)
 
 class TurmaDetailController(Resource):
     def get(self, id):
-        turma = turma_service.listar_turmas_by_id(id)
-        if turma is None:
-            return make_response(jsonify("Turma não econtrada!"),404)
+        turma_response_bd = turma_service.listar_turmas_by_id(id)
+
+        if turma_response_bd is None:
+            return make_response(jsonify('Turma não econtrada!'),404)
 
         validate = turma_schema.TurmaSchema()
-        return make_response(validate.jsonify(turma),200)
+
+        return make_response(validate.jsonify(turma_response_bd),200)
 
 
-api.add_resource(TurmaController, "/turma")
+api.add_resource(TurmaController, '/turma')
 api.add_resource(TurmaController, '/turma/<int:id>',endpoint='alterar_excluir_turma',methods=["PUT","DELETE"])
 api.add_resource(TurmaDetailController, '/turma/<int:id>')

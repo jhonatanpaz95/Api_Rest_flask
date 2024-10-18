@@ -8,3 +8,4 @@ class TurmaDTO():
     descricao: str
     data_inicio: date
     data_fim: date
+    curso_id: str

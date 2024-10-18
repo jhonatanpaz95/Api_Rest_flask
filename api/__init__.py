@@ -10,5 +10,5 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-from .controller import aluno_controller, turma_controller, disciplina_controller
-from .models import aluno_model, turma_model, disciplina_model
+from .controller import aluno_controller, turma_controller, disciplina_controller, curso_controller
+from .models import aluno_model, turma_model, disciplina_model, curso_model
