@@ -1,13 +1,13 @@
-from enum import property
+# from enum import property
 from dataclasses import dataclass
 from datetime import date
+
 
 @dataclass
 class AlunoDTO():
 
     nome: str
     data_nascimento: date
-
 
     # def __init__(self, nome, data_nascimento):
     #     self.__nome = nome

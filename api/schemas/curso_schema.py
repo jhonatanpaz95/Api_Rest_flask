@@ -1,10 +1,10 @@
-from dataclasses import field
-
+# from dataclasses import field
 from marshmallow_sqlalchemy import auto_field
 
 from api import ma
 from .. models import curso_model
-from marshmallow import fields
+# from marshmallow import fields
+
 
 class CursoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

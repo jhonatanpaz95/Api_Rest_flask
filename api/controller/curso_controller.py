@@ -12,7 +12,7 @@ class CursoController(Resource):
         curso_response_bd = curso_service.listar_cursos()
         validate = curso_schema.CursoSchema(many=True)
 
-        return make_response(validate.jsonify(curso_response_bd),200)
+        return make_response(validate.jsonify(curso_response_bd), 200)
 
     def post(self):
         curso_response_schema = curso_schema.CursoSchema()
@@ -28,7 +28,7 @@ class CursoController(Resource):
         retorno = curso_service.cadastrar_curso(novo_curso)
         curso_json = curso_response_schema.jsonify(retorno)
 
-        return make_response(curso_json,201)
+        return make_response(curso_json, 201)
 
     def put(self, id):
         curso_response_bd = curso_service.listar_curso_by_id(id)
@@ -55,7 +55,7 @@ class CursoController(Resource):
         curso_response_bd = curso_service.listar_curso_by_id(id)
 
         if curso_response_bd is None:
-            return make_response(jsonify('Curso não encontrado!'),400)
+            return make_response(jsonify('Curso não encontrado!'), 400)
 
         curso_service.excluir_curso(curso_response_bd)
 
@@ -63,7 +63,7 @@ class CursoController(Resource):
 
 
 class CursoDetailController(Resource):
-    def get(self,id):
+    def get(self, id):
         curso_response_bd = curso_service.listar_curso_by_id(id)
 
         if curso_response_bd is None:
@@ -75,7 +75,6 @@ class CursoDetailController(Resource):
         return make_response(validate.jsonify(curso_response_bd), 200)
 
 
-
 api.add_resource(CursoController, '/curso')
-api.add_resource(CursoController, '/curso/<int:id>',endpoint='alterar-excluir-curso',methods=["PUT", "DELETE"])
+api.add_resource(CursoController, '/curso/<int:id>', endpoint='alterar-excluir-curso', methods=["PUT", "DELETE"])
 api.add_resource(CursoDetailController, '/curso/<int:id>')

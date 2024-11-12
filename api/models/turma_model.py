@@ -1,5 +1,6 @@
 from api import db
 
+
 class TurmaModel(db.Model):
     __tablename__ = 'turma'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
