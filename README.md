@@ -1,6 +1,6 @@
 <img  src="https://flask.palletsprojects.com/en/stable/_images/flask-horizontal.png" height="100" />
 
-# Flask API
+# APIRESTFLASK
 
 ## Project Description
 This is a Flask app that has the purpose of learning about Python for building API's, learning about relationships with SQL Alchemy ORM.
@@ -105,16 +105,6 @@ This is a Flask app that has the purpose of learning about Python for building A
     <table>
         <tbody>
             <tr>
-                <td>
-                    <div align="center">
-                    <img src="https://avatars.githubusercontent.com/u/172435339?v=4/150" alt="Author's Photo" style="border-radius: 50%; width: 80px; height:80px;">
-                    <h3>Natan Oliveira</h3>
-                    <h6>Backend Developer</h6>
-                    <a href="https://www.linkedin.com/in/natan-oliveira-71023822b/">
-                        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
-                    </a>
-                    </div>
-                </td>
                 <td>
                     <div align="center">
                     <img src="https://avatars.githubusercontent.com/u/88974466?v=4" alt="Author's Photo" style="border-radius: 50%; width: 80px; height:80px;">
