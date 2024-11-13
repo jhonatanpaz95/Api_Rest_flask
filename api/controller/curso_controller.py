@@ -1,6 +1,7 @@
 from flask_restful import Resource
-
 from api import api
+
+
 from ..schemas import curso_schema
 from flask import request, make_response, jsonify
 from ..dto import curso_dto

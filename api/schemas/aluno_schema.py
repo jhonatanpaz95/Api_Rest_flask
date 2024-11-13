@@ -1,11 +1,12 @@
-from api import ma
-from ..models import aluno_model
+from api import app, ma
+
+from api.models.aluno_model import AlunoModel
 from marshmallow import fields
 
 
 class AlunoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = aluno_model.Aluno
+        model = AlunoModel
         load_instance = True
         fields = ('id', 'nome', 'data_nascimento')
 
